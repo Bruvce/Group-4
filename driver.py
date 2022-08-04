@@ -34,7 +34,8 @@ def Inv_menu():
     print("2. View by Genre")
     print("3. View All Movies")
     print("4. View All Games")
-    print("5. Back")
+    print("5. Add Item to Cart")
+    print("6. Back")
 
 games_db = Games()
 movies_db = Movies()
@@ -92,8 +93,41 @@ while option != 0:
                     elif opt1 == 4:
                         print("\n")
                         games_db.ViewAllGames()
-
+                    
                     elif opt1 == 5:
+                        choice = int(input("\nAdd a 1. Game or 2. Movie: "))
+                        print("\n")
+                        if choice == 1:
+                            tmp_list = games_db.getCartGames()
+                            num = 0
+                            namelist = []
+                            for x in tmp_list:
+                                num+=1
+                                namelist.append(x[0])
+                                print(num,"-", x[0])
+                            
+                            game_num = int(input("Your Choice?:"))
+                            print("\n")
+                            game_num -= 1
+                            name = namelist[game_num]
+                            tmp = games_db.addGametoCart(name)
+                        elif choice == 2:
+                            tmp_list = movies_db.getCartMovies()
+                            num = 0
+                            namelist = []
+                            for x in tmp_list:
+                                num+=1
+                                namelist.append(x[0])
+                                print(num,"-", x[0])
+                            
+                            movie_num = int(input("Your Choice?:"))
+                            print("\n")
+                            movie_num -= 1
+                            name = namelist[movie_num]
+                            tmp = movies_db.addMovietoCart(name)
+                            
+
+                    elif opt1 == 6:
                         tf == True
                         break
                         

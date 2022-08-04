@@ -9,7 +9,7 @@ try:
         database="shop"
     )
 
-    print("success")
+    print("Movies Connected to Driver")
     
 except:
     print("Failed Connection")
@@ -38,3 +38,32 @@ class Movies:
             print("Name:", x[0], "\tDirector:", x[1])
             print("Genre:", x[2], "\tYear:", x[3], "\tMain Character:", x[4])
             print("\n")
+
+    def getCartMovies(self):
+        cmd = ("SELECT Name FROM movies")
+        cursor.execute(cmd)
+        result = cursor.fetchall()
+        return result
+
+    def addMovietoCart(self, name):
+        cmd = ("SELECT * FROM movies WHERE Name=%s")
+        name1 = (name,)
+        cursor.execute(cmd, name1)
+        result=cursor.fetchall()
+
+        for x in result:
+            print("Name:", x[0], "\tDirector:", x[1])
+            print("Genre:", x[2], "\tYear:", x[3], "\tMain Character:", x[4])
+            print("\n") 
+
+        yn = input("Add this movie to your cart? y/n:")
+        if yn == "y":
+            qty = int(input("Quantity to add: "))
+            cmd = "INSERT INTO cart(Name, Quantity, Price) VALUES (%s, %s, %s)"
+            price = 9.99
+            info = (name, qty, price)
+            cursor.execute(cmd, info)
+            connection.commit()
+            print(qty, "items added to cart")
+        elif yn == "n":
+            return False
